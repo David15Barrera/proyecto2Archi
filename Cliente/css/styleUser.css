@@ -1,0 +1,110 @@
+form {
+	display: flex;
+	flex-direction: column;
+	align-items: right;
+	padding: 5px;
+	background-color: #fff;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	border-radius: 0.5px;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+input, select {
+	display: block;
+	width: 90%;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+	margin-bottom: 8px;
+	box-sizing: border-box;
+}   
+/* Estilos para el contenedor principal */
+.container {
+display: flex;
+flex-wrap: wrap;
+}
+
+/* Estilos para la columna del formulario */
+.column-form {
+flex: 1 1 10%;
+padding: 2px;
+}
+
+/* Estilos para la columna de la tabla */
+.column-table {
+	flex: 1 1 50%;
+	padding: 10px;
+	height: 600px; /* Fija la altura de la columna de la tabla */
+	overflow-y: scroll;
+}
+
+/* Estilos para la tabla */
+table {
+border-collapse: collapse;
+width: 100%;
+}
+
+th, td {
+text-align: left;
+padding: 12px;
+}
+
+th {
+background-color: #4797c5;
+color: white;
+}
+
+tr:nth-child(even) {
+background-color: #f2f2f2;
+}
+
+/* Estilos para el botón */
+input[type="submit"] {
+background-color: rgb(0, 92, 128);
+color: white;
+padding: 10px;
+border-radius: 5px;
+border: none;
+cursor: pointer;
+}
+
+/*Para los botones dentro del archivo adminAgreUser.js*/
+button.editar {
+	background-color: green;
+	color: white;
+	border: none;
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 2px 1px;
+	cursor: pointer;
+	border-radius: 4px;
+}
+button.editar:hover{
+	background-color: #91f05a;
+  }
+  
+  button.eliminar {
+	background-color: #e92828;
+	color: white;
+	border: none;
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 2px 1px;
+	cursor: pointer;
+	border-radius: 4px;
+  }
+
+button.eliminar:hover{
+	background-color: #e76529;
+  }

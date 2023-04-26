@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Admin</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../../css/styleUser.css" type="text/css">    
+    </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                    <a href="../admin.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="#" class="link">Usuarios</a>
+                    <a href="#" class="link">Reportes</a>
+                    <a href="#" class="link">Reportes</a>
+                    <a href="#" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<div class="container">
+    <div class="column-form">
+       <center><h2>Agregar usuario</h2></center> 
+        <br>
+        <form id="insertUser" action="">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre">
+            <br>
+            <label for="dpi">Dpi:</label>
+            <input type="number" name="dpi" id="dpi">
+            <br>
+            <label for="correo">Correo Electronico</label>
+            <input type="text" name="correo" id="correo">
+            <br>
+            <label for="pass">Contraseña:</label>
+            <input type="password" name="pass" id="pass">
+            <br>
+            <label for="cargo">Cargo:</label>
+            <select name="cargo" id="cargo">
+                <option value="administrador">administrador</option>
+                <option value="bodega">bodega</option>
+                <option value="comun">comun</option>
+            </select>
+            <br>
+            <br>
+            <label for="telefono">Telefono</label>
+            <input type="Number" name="telefono" id="telefono">
+            <br>
+            <input type="submit" value="Agregar">
+        </form>
+    </div>
+     <div class="column-table">
+     <center><h2>Usuarios Registrados</h2></center> 
+     <br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Dpi</th>
+                    <th>Correo</th>
+                    <th>Cargo</th>
+                    <th>Telefono</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-usuarios">
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="../../js/adminAgreUser.js"></script>
+    </body>
+</html>
