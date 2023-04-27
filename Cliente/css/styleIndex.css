@@ -366,3 +366,63 @@ a:hover{
   color: #333;
   transform: scale(1.2);
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+/*-------------------------------------------------Para el producto y contenerlos*/
+#productos-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px; /* Agregar padding */  
+  justify-content: space-between;
+}
+
+.producto-container {
+  float: left;
+  width: 15%;
+  margin: 40px;
+  transition: transform 0.2s ease-in-out; /* agregar transición */
+  align-items: stretch;
+  justify-content: space-between;
+  
+}
+
+.producto-container:hover {
+  transform: scale(1.2); /* agregar efecto de rebotar */
+}
+
+.producto-container img {
+  width: 210px;
+  height: 210px;
+  object-fit: cover;
+}
+.producto-container p {
+  display: flex;
+  position: center;
+
+}
+
+button {
+  border-radius: 30px;
+  padding: 5px 7px;
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button.orange {
+  background-color: #ff6600;
+}
+
+button.green {
+  background-color: #66cc33;
+}
+
+button:hover {
+  background-color: #28c1cc;
+}
