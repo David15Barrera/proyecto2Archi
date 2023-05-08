@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const usuarioRoutes = require('./routes/usuario.routes')
 const productoRoutes = require('./routes/producto.routes')
+const carritoRoutes = require('./routes/carrito.routes')
+const pedRoutes = require('./routes/pedido.routes')
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 app.use(express.json());
@@ -12,7 +15,7 @@ app.use(cors());
 
 //clase estatica para acceder a nuestras imagenes
 app.use(express.static(path.join(__dirname, 'controllers')));
-
+//app.use(multer({dest: path.join(__dirname,'controllers/img/imgproductos')}).single('image'));
 //Connection to data base
 async function start(){
     try{
@@ -31,9 +34,9 @@ start();
 
 //Routes
 app.use('/api',usuarioRoutes);
-
 app.use('/prod',productoRoutes);
-
+app.use('/carr', carritoRoutes);
+app.use('/pedido', pedRoutes);
 
 app.listen(3000);
 console.log('Servido HTTP escuchando en el puerto 3000');

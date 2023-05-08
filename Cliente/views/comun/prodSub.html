@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Comun</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../../css/Styleedit.css" type="text/css"> 
+       </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="../../views/comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="../comun/produts.html" class="link">Productos</a>
+                    <a href="../comun/prodSub.html" class="link">Vender</a>
+                    <a href="../comun/prodFin.html" class="link">Finalizar</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+<center><h1>Ingrese un producto a ingresa a venta</h1></center>
+<br>
+<form id="historia-form" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="nombre">Nombre del producto:</label>
+    <input type="text" name="nombre" id="nombre" required>
+  </div>
+  <div>
+    <label for="imagen">Seleccionar imagen:</label>
+    <input type="file" id="imagen" name="imagen">
+  </div>
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <textarea name="descripcion" id="descripcion" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="precio">Precio</label>
+    <input type="number" name="precio" id="precio" required>
+  </div>
+  <div class="form-group">
+    <label for="cantidad_existente">Cantidad disponible</label>
+    <input type="number" name="cantidad_existente" id="cantidad_existente" required>
+  </div>
+  <div class="form-group">
+    <label for="categorias">Categoria</label>
+    <select name="categoria" id="categorias">
+      <option value="Tecnologia">Tecnología</option>
+      <option value="Hogar">Hogar</option>
+      <option value="Academico">Academico</option>
+      <option value="Literatura">Literatura</option>
+      <option value="Decoracion">Decoracion</option>
+      <option value="Otros">Otros</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Ingresar">
+  </div>
+</form>
+<br>
+<br>
+<br>
+<center><h1>Productos No Aprobados</h1></center>
+<br>
+<div id="productos-containerCan">
+  <!-- Productos se mostrarán aquí -->
+</div>
+
+    <script src="../../js/comunProd.js"></script>
+    </body>
+</html>

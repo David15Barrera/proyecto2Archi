@@ -24,10 +24,33 @@ await fetch('http://localhost:3000/api/Login',{
 .then(respuesta => respuesta.json())
 .then(datos => {
   if (datos.mensaje === 'Autenticación exitosa') {
-    if (datos.tipo_usuario === 'administrador') {
-      window.location.href = 'admin.html'; // redirige a la página de admin
-    } else if (datos.tipo_usuario === 'comun') {
-      window.location.href = 'comun.html'; // redirige a la página de común
+        const token = datos.token; // Obtener el token de autenticación
+        localStorage.setItem('token', token); // Almacenar el token en el local storage
+        localStorage.setItem('dpi', dpi); // Almacenar el dpi en el local storage
+  if (datos.tipo_usuario === 'administrador') {
+        const token = localStorage.getItem('token'); // Obtener el token de autenticación del local storage
+        if (!token) {
+          // Si el token no existe en el local storage, redirigir al usuario de vuelta a la página de login
+          window.location.href = 'login.html';
+          return;
+        }
+        window.location.href = 'admin.html'; // redirige a la página de admin
+  } else if (datos.tipo_usuario === 'comun') {
+        const token = localStorage.getItem('token'); // Obtener el token de autenticación del local storage
+          if (!token) {
+            // Si el token no existe en el local storage, redirigir al usuario de vuelta a la página de login
+            window.location.href = 'login.html';
+            return;
+          }
+         window.location.href = 'comun.html'; // redirige a la página de común
+   }else if (datos.tipo_usuario === 'bodega') {
+          const token = localStorage.getItem('token'); // Obtener el token de autenticación del local storage
+          if (!token) {
+            // Si el token no existe en el local storage, redirigir al usuario de vuelta a la página de login
+            window.location.href = 'login.html';
+            return;
+          }
+          window.location.href = 'bodega.html'; // redirige a la página de común
     } else {
       // en caso de que el tipo de usuario no sea reconocido
       console.log('Tipo de usuario no reconocido');

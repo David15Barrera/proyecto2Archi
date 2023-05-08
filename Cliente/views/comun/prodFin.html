@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Comun</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">    </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="#"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="../comun/produts.html" class="link">Productos</a>
+                    <a href="../comun/prodSub.html" class="link">Vender</a>
+                    <a href="../comun/prodFin.html" class="link">Finalizar</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<div class="contenedor-tabla">
+<br>
+    <center><h1>Datos del carrito</h1></center>
+<br>
+<table id="tabla-carrito">
+    <thead>
+      <tr>
+        <th>Nombre del producto</th>
+        <th>Cantidad</th>
+        <th>Precio unitario</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <script>
+        const tablaCarrito = document.getElementById('tabla-carrito');
+        const DPI = localStorage.getItem('dpi');
+        console.log(DPI)
+        fetch(`http://localhost:3000/carr/carritoVer/${DPI}`)
+          .then(respuesta => respuesta.json())
+          .then(carrito => {
+            if (!carrito || !carrito.length) {
+              throw new Error('El carrito está vacío o no existe');
+            }
+
+            let total = 0;
+           
+            carrito.forEach(producto => {
+              const fila = document.createElement('tr');
+
+              const celdaNombre = document.createElement('td');
+              celdaNombre.textContent = producto.nombre;
+  
+              const celdaCantidad = document.createElement('td');
+              celdaCantidad.textContent = producto.cantidad;
+  
+              const celdaPrecioUnitario = document.createElement('td');
+              celdaPrecioUnitario.textContent = producto.precio;
+  
+              const celdaSubtotal = document.createElement('td');
+              celdaSubtotal.textContent = producto.cantidad * producto.precio;
+
+              const subtotal = producto.cantidad * producto.precio;
+              celdaSubtotal.textContent = subtotal;
+              total += subtotal;
+
+
+  
+              const celdaAcciones = document.createElement('td');
+              const botonEliminar = document.createElement('button');
+                botonEliminar.classList.add('eliminar');
+                botonEliminar.textContent = 'Eliminar';
+                botonEliminar.setAttribute('data-carrito-id', carrito._id);
+                botonEliminar.setAttribute('data-producto-id', producto._id);
+                botonEliminar.addEventListener('click', eliminarProducto);
+              celdaAcciones.appendChild(botonEliminar);
+  
+              fila.appendChild(celdaNombre);
+              fila.appendChild(celdaCantidad);
+              fila.appendChild(celdaPrecioUnitario);
+              fila.appendChild(celdaSubtotal);
+              fila.appendChild(celdaAcciones);
+  
+              tablaCarrito.appendChild(fila);
+            });
+  //Mostramos el total gastado en los productos
+          console.log(total);          
+          const filaTotal = document.createElement('tr');
+          const celdaTotal = document.createElement('td');
+          celdaTotal.setAttribute('colspan', 3);
+          celdaTotal.textContent = 'Total';
+          filaTotal.appendChild(celdaTotal);
+          const celdaTotalValor = document.createElement('td');
+          celdaTotalValor.textContent = total;
+          filaTotal.appendChild(celdaTotalValor);
+          tablaCarrito.appendChild(filaTotal);
+
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Tu carrito de compras esta vacio, realiza una compra para ver tus productos');
+          });
+
+          let carritoId;
+          
+          fetch(`http://localhost:3000/carr/carritoId/${DPI}/id`)
+                .then(respuesta => respuesta.json())
+                .then(carritos => {
+                    carritoId = carritos._id;
+                    console.log("Este es de ver"+carritoId);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Error al obtener el id del carrito');
+                });
+
+    function eliminarProducto(event) {
+        const productoId = event.target.getAttribute('data-producto-id');
+        console.log("Este no se si aparece"+carritoId);
+        console.log(productoId);
+                fetch(`http://localhost:3000/carr/carritoEl/${carritoId}/producto/${productoId}`, {
+                    method: 'DELETE'
+                })
+                .then(respuesta => respuesta.json())
+                .then(() => {
+                  alert('Producto Eliminado del carrito');
+                    // Eliminar la fila correspondiente de la tabla
+                    const fila = event.target.closest('tr');
+                    fila.remove();
+                })  
+                .catch(error => {
+                    console.error(error);
+                    alert('Error al eliminar el producto del carrito');
+                });
+                }
+                
+      function eliminarCarrito(event){
+        console.log("Todos los Productos "+carritoId);
+        fetch(`http://localhost:3000/carr/carritoTodo/${carritoId}/productos`, {
+          method: 'DELETE'
+        })
+        .then(respuesta => respuesta.json())
+        .then(() => {
+          // Eliminar todas las filas de la tabla
+          const filas = document.querySelectorAll('#tabla-carrito tbody tr');
+          filas.forEach(fila => fila.remove());
+          alert('Carrito de Compras eliminado');
+          window.location.href = 'prodFin.html';
+        })
+        .catch(error => {
+          console.error(error);
+          alert('Error al eliminar los productos del carrito');
+        });
+      }          
+  
+        document.addEventListener("DOMContentLoaded", function() {
+        // Agregar evento de click al botón cancelar
+        const btCancelar = document.getElementById('btCancelar');
+        btCancelar.addEventListener('click', eliminarCarrito);
+       });
+
+    
+      document.addEventListener("DOMContentLoaded", function() {
+      const btnFinalizar = document.getElementById('btFinalizar');
+       btnFinalizar.addEventListener('click', () => {
+       window.location.href = 'prodPedi.html';
+      });
+    });
+
+
+
+                    </script>
+    </tbody>
+  </table>
+  <div class="botones">
+    <button class="boton cancelar" id="btCancelar">Cancelar</button>
+    <button class="boton finalizar" id="btFinalizar">Acceptar</button>
+</div>
+</div>
+    <script src=""></script>
+    </body>
+</html>

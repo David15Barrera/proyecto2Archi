@@ -7,9 +7,13 @@ const productoSchema = new Schema({
     precio:Number,
     img: String,
     descripcion: String,
-    vendedor: Object,
+    vendedor: { 
+        nombre: String,
+        DPI: Number 
+      },
     categorias:Array,
-    cantidad_existente:Number
+    cantidad_existente:Number,
+    estado: String
 },
 {
     versionKey: false

@@ -426,3 +426,204 @@ button.green {
 button:hover {
   background-color: #28c1cc;
 }
+
+/*--------------------------------------------------------- Para los detalles de cada producto---*/
+.productosVer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.productosVer:last-child {
+  margin-bottom: 0;
+}
+
+.productosVer img {
+  max-width: 60%;
+  height: 400px;
+  margin-right: 20px;
+  object-fit: cover;
+}
+
+.productosVer div {
+  flex: 1;
+  max-width: 30%;
+}
+
+.productosVer button {
+  margin-top: 20px;
+  background-color: #0d57b8;
+  color: #fff;
+  font-size: 1.5em;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  width: 300px;
+}
+
+.productosVer input{
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  width: 100px;
+  font-weight: bold;
+}
+.productosVer button:hover {
+  background-color: #fff;
+  color: #0d57b8;
+  border: 1px solid #0d57b8;
+}
+
+.productosVer div h3 {
+  font-size: 34px;
+  margin-top: 0;
+  color: #0d57b8;
+}
+
+.productosVer div p {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.productosVer div p.precio {
+  text-align: center;
+  font-weight: bold;
+  font-size: 27px;
+  color: #000000;
+}
+/*--------------------------------------------------------------------Productos Cancelados*/
+#productos-containerCan {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px; /* Agregar padding */  
+  justify-content: space-between;
+}
+
+.producto-containerCan {
+  float: left;
+  width: 15%;
+  margin: 40px;
+  transition: transform 0.2s ease-in-out; /* agregar transición */
+  align-items: stretch;
+  justify-content: space-between;
+  
+}
+
+.producto-containerCan:hover {
+  transform: scale(1.2); /* agregar efecto de rebotar */
+}
+
+.producto-containerCan img {
+  width: 210px;
+  height: 210px;
+  object-fit: cover;
+}
+.producto-containerCan p {
+  display: flex;
+  position: center;
+
+}
+
+button.orange {
+  background-color: #ff6600;
+}
+
+button.green {
+  background-color: #66cc33;
+}
+button.Red {
+  background-color: #c00707;
+}
+
+button:hover {
+  background-color: #28c1cc;
+}
+
+/*------------------------------------------------------------------Colores del contenedor del carrito-----*/
+#tabla-carrito {
+  border-collapse: collapse;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#tabla-carrito th,
+#tabla-carrito td {
+  padding: 12px 15px;
+}
+
+#tabla-carrito th {
+  background-color: #5eb2e2;
+  color: white;
+  text-align: left;
+}
+
+#tabla-carrito tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+#tabla-carrito tbody tr:hover {
+  background-color: #ddd;
+}
+
+#tabla-carrito td {
+  border-bottom: 1px solid #ddd;
+}
+
+#tabla-carrito td:last-child {
+  border-bottom: none;
+}
+
+#tabla-carrito tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#tabla-carrito td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+#tabla-carrito td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+ 
+.eliminar {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/*----------------------------------------------------------- Botones del panel del Carrito-----*/
+.boton {
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 20px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.cancelar {
+  background-color: red;
+}
+
+.finalizar {
+  background-color: green;
+}
+
+.botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}

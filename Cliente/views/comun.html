@@ -6,8 +6,10 @@
         <meta name="description" contents="ARCH PROYECTO">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/styleIndex.css" type="text/css">    </head>
-    <body>
+        <link rel="stylesheet" href="../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../css/StyleInicio.css" type="text/css"> 
+       </head>
+    <body class="comun">
         <nav class="nav__hero">
             <div class="container nav__container">
                 <div class="logo">
@@ -15,9 +17,9 @@
                 </div>
                 <div class="links">
                     <a href="../views/comun/produts.html" class="link">Productos</a>
-                    <a href="#" class="link">Vender</a>
+                    <a href="../views/comun/prodSub.html" class="link">Vender</a>
                     <a href="#" class="link">Finalizar</a>
-                    <a href="#" class="link link--active">Cerrar Sesion</a>
+                    <a href="../views/login.html" class="link link--active">Cerrar Sesion</a>
                 </div>
             </div>
         </nav>
@@ -25,9 +27,21 @@
 <br>
 <br>
 <br>
-<h1> Hola Comun</h1>
+<br>
+<br>
+<br>
+<br>
+<div class="contenedor">
+    <div class="texto">
+      <span id="dpiUsuario"></span>
+      <span id="nombreUsuario"></span>
+      <br>
+      <span id="correoUsuario"></span>
+      <br>
+      <span id="cargoUsuario"></span>
+    </div>
+</div>
 
-
-    <script src=""></script>
+    <script src="../js/inicio.js"></script>
     </body>
 </html>

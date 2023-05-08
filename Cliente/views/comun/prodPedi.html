@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Comun</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">    
+        <link rel="stylesheet" href="../../css/StyleForm.css" type="text/css">    
+    </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="../comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="../comun/produts.html" class="link">Productos</a>
+                    <a href="../comun/prodSub.html" class="link">Vender</a>
+                    <a href="../comun/prodFin.html" class="link">Finalizar</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form id="formulario-pedido">
+    <fieldset>
+<center><legend>Información para la Compra</legend></center>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" readonly>
+      <br>
+      <label for="direccion">Dirección:</label>
+      <input type="text" id="direccion" name="direccion" required>
+      <br>
+      <label for="tarjeta">Tarjeta:</label>
+      <input type="number" id="tarjeta" name="tarjeta" required>
+    </fieldset>
+    <fieldset>
+      <legend>Detalles del Pedido</legend>
+      <table id="tabla-pedido">
+        <thead>
+          <tr>
+            <th>Nombre del producto</th>
+            <th>Cantidad</th>
+            <th>Precio unitario</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <br>
+            <script>
+const tablaCarrito = document.getElementById('tabla-pedido');
+const DPI = localStorage.getItem('dpi');
+let total = 0;
+const productosEnTabla = [];
+console.log(DPI);
+fetch(`http://localhost:3000/carr/carritoVer/${DPI}`)
+  .then(respuesta => respuesta.json())
+  .then(carrito => {
+    if (!carrito || !carrito.length) {
+      throw new Error('El carrito está vacío o no existe');
+    }
+    let totalTabla = 0;
+    const cuerpoTabla = tablaCarrito.getElementsByTagName('tbody')[0];
+    carrito.forEach(producto => {
+      const fila = document.createElement('tr');
+
+      const celdaNombre = document.createElement('td');
+      celdaNombre.textContent = producto.nombre;
+
+      const celdaCantidad = document.createElement('td');
+      celdaCantidad.textContent = producto.cantidad;
+
+      const celdaPrecioUnitario = document.createElement('td');
+      celdaPrecioUnitario.textContent = producto.precio;
+
+      const celdaSubtotal = document.createElement('td');
+      celdaSubtotal.textContent = producto.cantidad * producto.precio;
+      
+      const subtotal = producto.cantidad * producto.precio;
+
+
+      celdaSubtotal.textContent = subtotal;
+      total += subtotal;
+      totalTabla += subtotal;
+
+      fila.appendChild(celdaNombre);
+      fila.appendChild(celdaCantidad);
+      fila.appendChild(celdaPrecioUnitario);
+      fila.appendChild(celdaSubtotal);
+
+      cuerpoTabla.appendChild(fila);
+    });
+
+    const filaTotal = document.createElement('tr');
+    const celdaTotal = document.createElement('td');
+    celdaTotal.setAttribute('colspan', 3);
+    celdaTotal.textContent = 'Total';
+    filaTotal.appendChild(celdaTotal);
+
+    const celdaTotalValor = document.createElement('td');
+    celdaTotalValor.textContent = total;
+    filaTotal.appendChild(celdaTotalValor);
+    cuerpoTabla.appendChild(filaTotal);
+
+  const filasTabla = cuerpoTabla.rows;
+  for (let i = 0; i < filasTabla.length - 1; i++) { // empezamos en 1 para saltar la fila de encabezado, y terminamos en length - 1 para saltar la fila de total
+  const celdas = filasTabla[i].getElementsByTagName('td');
+      if (celdas.length >= 1) {
+        const nombreProducto = celdas[0].textContent;
+        const cantidad = parseInt(celdas[1].textContent);
+        const precioUnitario = parseFloat(celdas[2].textContent);
+        productosEnTabla.push({ nombre_producto: nombreProducto, cantidad: cantidad, precio: precioUnitario });
+      } else {
+        console.warn('Fila de la tabla incompleta:', filaTotal[i]);
+      }
+    }
+//    console.log(JSON.stringify(productosEnTabla));
+ console.log(productosEnTabla);
+  })
+  .catch(error => {
+    console.error(error);
+    alert('Tu carrito de compras está vacío, realiza una compra para ver tus productos');
+  });
+
+
+              //--------------------------------------------Formulario para guardar los datos en el boton----------------------------------------------------
+
+              const formulario = document.getElementById('formulario-pedido');
+              const botonFinalizar = document.getElementById('btFinalizar');
+             
+// evento submit del formulario
+formulario.addEventListener('submit', (event) => {
+  event.preventDefault(); // previene el comportamiento predeterminado del formulario
+  const DPI = localStorage.getItem('dpi');
+  const nombre = document.getElementById('nombre').value;
+  const direccion = document.getElementById('direccion').value;
+  const tarjeta = document.getElementById('tarjeta').value;
+  const fechaCompra = document.getElementById('fechaCompra').value;
+  const fechaEntrega = document.getElementById('fechaEntrega').value;
+  const estado = 'procesando';
+  const productos = productosEnTabla;
+  const totalD = total;
+
+//Calcular venta del 95%
+const venta95 = totalD * 0.95;
+
+// Calcular el 5% de la venta
+const venta5 = totalD * 0.05; 
+
+  const datosPedido = {
+    dpi: DPI,
+    nombre_usuario: nombre,
+    productos_comprados: productos,
+    lugar_envio: direccion,
+    tarjeta: tarjeta,
+    fecha_compra: fechaCompra,
+    fecha_entrega_prevista: fechaEntrega,
+    Total:  totalD,
+    TotalPag: venta95,
+    TotalCli: venta5,
+    estado_pedido: estado
+  };
+
+  fetch('http://localhost:3000/pedido/finalizar', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datosPedido)
+  })
+    .then(respuesta => respuesta.json())
+    .then(pedido => {
+      alert('Pedido guardado con éxito');
+      window.location.href = 'produts.html';
+      // limpiar el carrito y redirigir a la página de inicio o de agradecimiento
+    })
+    .catch(error => {
+      console.error(error);
+      alert('Error al guardar el pedido');
+    });
+});
+            </script>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <label for="fechaCompra">Fecha de Compra:</label>
+      <input id="fechaCompra" name="fechaCompra" pattern="\d{4}-\d{2}-\d{2}" readonly>      
+      <br>
+      <label for="fechaEntrega">Fecha de entrega prevista:</label>
+      <input id="fechaEntrega" name="fechaEntrega" required readonly>
+<br>
+      <label for="estado">Estado del Pedido:</label>
+      <input type="text" value="procesando" readonly>
+    </fieldset>
+    <button type="submit" id="btFinalizar">Finalizar</button>
+  </form>
+  <script>
+
+  </script>
+    <script src="../../js/fecha.js"></script>
+    </body>    
+</html>
