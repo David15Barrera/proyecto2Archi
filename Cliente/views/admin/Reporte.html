@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Editar</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../../css/buscar.css" type="text/css"> 
+    </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="../admin.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="../admin/Usuarios.html" class="link">Usuarios</a>
+                    <a href="#" class="link">Reportes</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+<center><h1> Reportes </h1></center>
+<br>
+<h2>  <label for="fechaInicio">Top 10 productos más vendidos en un intervalo de tiempo</label></h2>
+  <br>
+<label for="fechaInicio">Fecha de inicio:</label>
+<input type="date" id="fechaInicio">
+
+<label for="fechaFin">Fecha de fin:</label>
+<input type="date" id="fechaFin">
+
+<button id="verBtn">Ver</button>
+
+<table id="tablaTop10">
+  <tr>
+    <th>Producto</th>
+    <th>Cantidad</th>
+  </tr>
+</table>
+<br>
+<br>
+<h2>  <label for="fechaInicio">Top 5 clientes que más ganancias por compras han generado en un intervalo de
+  tiempo</label></h2>
+<br>
+<br>
+<label for="fechaInicioCli">Fecha de inicio:</label>
+<input type="date" id="fechaInicioCli">
+
+<label for="fechaFinCli">Fecha de fin:</label>
+<input type="date" id="fechaFinCli">
+
+<button id="verBtnCli">Ver</button>
+
+<table id="tablaTop5">
+  <tr>
+    <th>Dpi</th>
+    <th>Usuario</th>
+    <th>Cantidad</th>
+  </tr>
+</table>
+<br>
+<br>
+<script>
+  const fechaInicioInput = document.getElementById('fechaInicio');
+  const fechaFinInput = document.getElementById('fechaFin');
+  const verBtn = document.getElementById('verBtn');
+  const tablaTop10 = document.getElementById('tablaTop10');
+
+  verBtn.addEventListener('click', () => {
+    const fechaInicio = new Date(fechaInicioInput.value);
+    const fechaFin = new Date(fechaFinInput.value);
+
+    const fechaInicioFormatted = fechaInicio.toISOString().split('T')[0];
+    const fechaFinFormatted = fechaFin.toISOString().split('T')[0];
+    console.log(fechaInicioFormatted);
+    console.log(fechaFinFormatted);
+    console.log(fechaFin);
+    console.log(fechaInicio);
+    fetch(`http://localhost:3000/pedido/top?fechaInicio=${fechaInicioFormatted}&fechaFin=${fechaFinFormatted}`)
+      .then(response => response.json())
+      .then(data => {
+    tablaTop10.innerHTML = '';
+    console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          const fila = document.createElement('tr');
+          const celdaProducto = document.createElement('td');
+          const celdaCantidad = document.createElement('td');
+          celdaProducto.textContent = data[i][0];
+          celdaCantidad.textContent = data[i][1];
+          fila.appendChild(celdaProducto);
+          fila.appendChild(celdaCantidad);
+          tablaTop10.appendChild(fila);
+        }
+      })
+      .catch(error => console.error(error));
+  });
+
+const tablaTop5 = document.getElementById('tablaTop5');
+const fechaInicioCli = document.getElementById('fechaInicioCli');
+const fechaFinCli = document.getElementById('fechaFinCli');
+const verBtnCli = document.getElementById('verBtnCli');
+
+verBtnCli.addEventListener('click', async () => {
+  const fechaInicio = new Date(fechaInicioCli.value);
+  const fechaFin = new Date(fechaFinCli.value);
+  const fechaInicioFormatted = fechaInicio.toISOString().split('T')[0];
+  const fechaFinFormatted = fechaFin.toISOString().split('T')[0];
+  console.log(fechaInicioFormatted);
+  console.log(fechaFinFormatted);
+  const url = `http://localhost:3000/pedido/topclientes?fechaInicio=${fechaInicioFormatted}&fechaFin=${fechaFinFormatted}`;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  // Limpiar la tabla antes de mostrar los nuevos datos
+  while (tablaTop5.tBodies[0].hasChildNodes()) {
+    tablaTop5.tBodies[0].removeChild(tablaTop5.tBodies[0].firstChild);
+  }
+
+  // Mostrar los datos en la tabla
+  for (const [dpi, cliente] of data) {
+    const fila = document.createElement('tr');
+    const celdaDpi = document.createElement('td');
+    const celdaNombreUsuario = document.createElement('td');
+    const celdaGanancias = document.createElement('td');
+    celdaDpi.textContent = dpi;
+    celdaNombreUsuario.textContent = cliente.nombre_usuario;
+    celdaGanancias.textContent = cliente.ganancias;
+    fila.appendChild(celdaDpi);
+    fila.appendChild(celdaNombreUsuario);
+    fila.appendChild(celdaGanancias);
+    tablaTop5.tBodies[0].appendChild(fila);
+  }
+});
+</script>
+
+    </body>
+</html>

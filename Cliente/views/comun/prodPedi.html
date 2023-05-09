@@ -55,137 +55,190 @@
           <tr>
             <br>
             <script>
-const tablaCarrito = document.getElementById('tabla-pedido');
-const DPI = localStorage.getItem('dpi');
-let total = 0;
-const productosEnTabla = [];
-console.log(DPI);
-fetch(`http://localhost:3000/carr/carritoVer/${DPI}`)
-  .then(respuesta => respuesta.json())
-  .then(carrito => {
-    if (!carrito || !carrito.length) {
-      throw new Error('El carrito está vacío o no existe');
-    }
-    let totalTabla = 0;
-    const cuerpoTabla = tablaCarrito.getElementsByTagName('tbody')[0];
-    carrito.forEach(producto => {
-      const fila = document.createElement('tr');
+            const tablaCarrito = document.getElementById('tabla-pedido');
+            const DPI = localStorage.getItem('dpi');
+            let total = 0;
+            const productosEnTabla = [];
+            
+            const listNomProd = [];
 
-      const celdaNombre = document.createElement('td');
-      celdaNombre.textContent = producto.nombre;
+            console.log(DPI);
+            fetch(`http://localhost:3000/carr/carritoVer/${DPI}`)
+              .then(respuesta => respuesta.json())
+              .then(carrito => {
+                if (!carrito || !carrito.length) {
+                  throw new Error('El carrito está vacío o no existe');
+                }
+                let totalTabla = 0;
+                const cuerpoTabla = tablaCarrito.getElementsByTagName('tbody')[0];
+                carrito.forEach(producto => {
+                  const fila = document.createElement('tr');
 
-      const celdaCantidad = document.createElement('td');
-      celdaCantidad.textContent = producto.cantidad;
+                  const celdaNombre = document.createElement('td');
+                  celdaNombre.textContent = producto.nombre;
+                  lisProductos = producto.nombre;
 
-      const celdaPrecioUnitario = document.createElement('td');
-      celdaPrecioUnitario.textContent = producto.precio;
+                  const celdaCantidad = document.createElement('td');
+                  celdaCantidad.textContent = producto.cantidad;
+                  lisCantidad = producto.cantidad;
 
-      const celdaSubtotal = document.createElement('td');
-      celdaSubtotal.textContent = producto.cantidad * producto.precio;
-      
-      const subtotal = producto.cantidad * producto.precio;
+                  const celdaPrecioUnitario = document.createElement('td');
+                  celdaPrecioUnitario.textContent = producto.precio;
+
+                  const celdaSubtotal = document.createElement('td');
+                  celdaSubtotal.textContent = producto.cantidad * producto.precio;
+                  
+                  const subtotal = producto.cantidad * producto.precio;
 
 
-      celdaSubtotal.textContent = subtotal;
-      total += subtotal;
-      totalTabla += subtotal;
+                  celdaSubtotal.textContent = subtotal;
+                  total += subtotal;
+                  totalTabla += subtotal;
+                  fila.appendChild(celdaNombre);
+                  fila.appendChild(celdaCantidad);
+                  fila.appendChild(celdaPrecioUnitario);
+                  fila.appendChild(celdaSubtotal);
 
-      fila.appendChild(celdaNombre);
-      fila.appendChild(celdaCantidad);
-      fila.appendChild(celdaPrecioUnitario);
-      fila.appendChild(celdaSubtotal);
+                  cuerpoTabla.appendChild(fila);
+                });
 
-      cuerpoTabla.appendChild(fila);
-    });
+                const filaTotal = document.createElement('tr');
+                const celdaTotal = document.createElement('td');
+                celdaTotal.setAttribute('colspan', 3);
+                celdaTotal.textContent = 'Total';
+                filaTotal.appendChild(celdaTotal);
 
-    const filaTotal = document.createElement('tr');
-    const celdaTotal = document.createElement('td');
-    celdaTotal.setAttribute('colspan', 3);
-    celdaTotal.textContent = 'Total';
-    filaTotal.appendChild(celdaTotal);
+                const celdaTotalValor = document.createElement('td');
+                celdaTotalValor.textContent = total;
+                filaTotal.appendChild(celdaTotalValor);
+                cuerpoTabla.appendChild(filaTotal);
 
-    const celdaTotalValor = document.createElement('td');
-    celdaTotalValor.textContent = total;
-    filaTotal.appendChild(celdaTotalValor);
-    cuerpoTabla.appendChild(filaTotal);
+              const filasTabla = cuerpoTabla.rows;
+              for (let i = 0; i < filasTabla.length - 1; i++) { // empezamos en 1 para saltar la fila de encabezado, y terminamos en length - 1 para saltar la fila de total
+              const celdas = filasTabla[i].getElementsByTagName('td');
+                  if (celdas.length >= 1) {
+                    const nombreProducto = celdas[0].textContent;
+                    const cantidad = parseInt(celdas[1].textContent);
+                    const precioUnitario = parseFloat(celdas[2].textContent);
+                    productosEnTabla.push({ nombre_producto: nombreProducto, cantidad: cantidad, precio: precioUnitario });
+                    listNomProd.push({nombre: nombreProducto, cantidad_existente: cantidad})
+                  } else {
+                    console.warn('Fila de la tabla incompleta:', filaTotal[i]);
+                  }
+                }
+            //    console.log(JSON.stringify(productosEnTabla));
+            console.log(productosEnTabla);
+            console.log(listNomProd);
+              })
+              .catch(error => {
+                console.error(error);
+                alert('Tu carrito de compras está vacío, realiza una compra para ver tus productos');
+              });
 
-  const filasTabla = cuerpoTabla.rows;
-  for (let i = 0; i < filasTabla.length - 1; i++) { // empezamos en 1 para saltar la fila de encabezado, y terminamos en length - 1 para saltar la fila de total
-  const celdas = filasTabla[i].getElementsByTagName('td');
-      if (celdas.length >= 1) {
-        const nombreProducto = celdas[0].textContent;
-        const cantidad = parseInt(celdas[1].textContent);
-        const precioUnitario = parseFloat(celdas[2].textContent);
-        productosEnTabla.push({ nombre_producto: nombreProducto, cantidad: cantidad, precio: precioUnitario });
-      } else {
-        console.warn('Fila de la tabla incompleta:', filaTotal[i]);
-      }
-    }
-//    console.log(JSON.stringify(productosEnTabla));
- console.log(productosEnTabla);
-  })
-  .catch(error => {
-    console.error(error);
-    alert('Tu carrito de compras está vacío, realiza una compra para ver tus productos');
-  });
-
+              let carritoId;
+          
+          fetch(`http://localhost:3000/carr/carritoId/${DPI}/id`)
+                .then(respuesta => respuesta.json())
+                .then(carritos => {
+                    carritoId = carritos._id;
+                    console.log("Este es de ver"+carritoId);
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Error al obtener el id del carrito');
+                });
 
               //--------------------------------------------Formulario para guardar los datos en el boton----------------------------------------------------
 
               const formulario = document.getElementById('formulario-pedido');
               const botonFinalizar = document.getElementById('btFinalizar');
              
-// evento submit del formulario
-formulario.addEventListener('submit', (event) => {
-  event.preventDefault(); // previene el comportamiento predeterminado del formulario
-  const DPI = localStorage.getItem('dpi');
-  const nombre = document.getElementById('nombre').value;
-  const direccion = document.getElementById('direccion').value;
-  const tarjeta = document.getElementById('tarjeta').value;
-  const fechaCompra = document.getElementById('fechaCompra').value;
-  const fechaEntrega = document.getElementById('fechaEntrega').value;
-  const estado = 'procesando';
-  const productos = productosEnTabla;
-  const totalD = total;
+            // evento submit del formulario
+            formulario.addEventListener('submit', (event) => {
+              event.preventDefault(); // previene el comportamiento predeterminado del formulario
+              const DPI = localStorage.getItem('dpi');
+              const nombre = document.getElementById('nombre').value;
+              const direccion = document.getElementById('direccion').value;
+              const tarjeta = document.getElementById('tarjeta').value;
+              const fechaCompra = document.getElementById('fechaCompra').value;
+              const fechaEntrega = document.getElementById('fechaEntrega').value;
+              const estado = 'procesando';
+              const productos = productosEnTabla;
+              const totalD = total;
+              console.log("Este es de verdad  "+carritoId);
+            //Calcular venta del 95%
+            const venta95 = totalD * 0.95;
 
-//Calcular venta del 95%
-const venta95 = totalD * 0.95;
+            // Calcular el 5% de la venta
+            const venta5 = totalD * 0.05; 
 
-// Calcular el 5% de la venta
-const venta5 = totalD * 0.05; 
+              const datosPedido = {
+                dpi: DPI,
+                nombre_usuario: nombre,
+                productos_comprados: productos,
+                lugar_envio: direccion,
+                tarjeta: tarjeta,
+                fecha_compra: fechaCompra,
+                fecha_entrega_prevista: fechaEntrega,
+                Total:  totalD,
+                TotalPag: venta95,
+                TotalCli: venta5,
+                estado_pedido: estado
+              };
+//-------------------------------------------------------------- Para guardar los datos del Pedido
+              fetch('http://localhost:3000/pedido/finalizar', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datosPedido)
+              })
+                .then(respuesta => respuesta.json())
+                .then(pedido => {
+                  alert('Pedido guardado con éxito');
+                  // limpiar el carrito y redirigir a la página de inicio o de agradecimiento
+//                  window.location.href = 'produts.html';                  
+                })
+                .catch(error => {
+                  console.error(error);
+                  alert('Error al guardar el pedido');
+                });
+//------------------------------------------------------------------Para actualizar los productos No funciona
+            const lisProdAct = listNomProd; // función que devuelve un array con los productos en la tabla
+            console.log(lisProdAct);    
+            fetch('http://localhost:3000/prod/actualizarcantidad', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(lisProdAct)
+            })
+            .then(respuesta => respuesta.json())
+            .then(productosActualizados => {
+              console.log('Productos actualizados:', productosActualizados);
 
-  const datosPedido = {
-    dpi: DPI,
-    nombre_usuario: nombre,
-    productos_comprados: productos,
-    lugar_envio: direccion,
-    tarjeta: tarjeta,
-    fecha_compra: fechaCompra,
-    fecha_entrega_prevista: fechaEntrega,
-    Total:  totalD,
-    TotalPag: venta95,
-    TotalCli: venta5,
-    estado_pedido: estado
-  };
+            })
+            .catch(error => {
+              console.error(error);
+              alert('Error al actualizar la cantidad de los productos');
+            });
 
-  fetch('http://localhost:3000/pedido/finalizar', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(datosPedido)
-  })
-    .then(respuesta => respuesta.json())
-    .then(pedido => {
-      alert('Pedido guardado con éxito');
-      window.location.href = 'produts.html';
-      // limpiar el carrito y redirigir a la página de inicio o de agradecimiento
-    })
-    .catch(error => {
-      console.error(error);
-      alert('Error al guardar el pedido');
-    });
-});
+//------------------------------------------------------------- Para eliminar el carrito
+          fetch(`http://localhost:3000/carr/carritoTodo/${carritoId}/productos`, {
+                    method: 'DELETE'
+                  })
+                  .then(respuesta => respuesta.json())
+                  .then(() => {
+                    // Eliminar todas las filas de la tabla
+                    const filas = document.querySelectorAll('#tabla-carrito tbody tr');
+                    filas.forEach(fila => fila.remove());
+                  window.location.href = 'produts.html';
+                  })
+                  .catch(error => {
+                    console.error(error);
+                    alert('Error al eliminar los productos del carrito');
+                  });
+            });
             </script>
           </tr>
         </tbody>

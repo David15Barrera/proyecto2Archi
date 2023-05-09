@@ -15,6 +15,7 @@ router.put('/aprobar/:id', controller.prodAprobar);
 router.put('/desaprobar/:id', controller.prodNegar);
 router.delete('/eliminar/:id', controller.eliminarProducto);
 router.get('/prodCancelado/:DPI', controller.prodCanceladoid);
+router.put('/actualizarcantidad', controller.actualizarCantidad);
 
 
 //Revisar el metodo de enviado de imagen, la ruta no responde

@@ -1,0 +1,41 @@
+#tablaPedidos {
+    border-collapse: collapse;
+    margin: auto;
+    border-radius: 10px;
+    overflow: hidden;
+
+  }
+
+  #tablaPedidos thead tr {
+    background-color: #248ef8;
+    color: white;
+  }
+
+  #tablaPedidos th,
+  #tablaPedidos td {
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  #tablaPedidos tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  #tablaPedidos tbody tr:hover {
+    background-color: #d9d9d9;
+  }
+
+  #tablaPedidos button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  #tablaPedidos button:hover {
+    background-color: #27ae60;
+  }

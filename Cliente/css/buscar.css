@@ -1,0 +1,92 @@
+/* Estilos para la tabla */
+#tablaTop10 {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #tablaTop10 th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #tablaTop10 td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+  label {
+    margin-left: 50px;
+  }
+  /* Estilos para los inputs de fecha */
+  input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 250px;
+    margin-bottom: 10px;
+    margin: 0 10px;
+  }
+  
+  /* Estilos para el botón */
+  #verBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  #verBtn:hover {
+    background-color: #3e8e41;
+  }
+ 
+  
+ /*------------------------------------------------------------------------- Para la segunda tabla*/
+ #tablaTop5 {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #tablaTop5 th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #tablaTop5 td {
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+
+  /* Estilos para el botón */
+  #verBtnCli {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  #verBtnCli:hover {
+    background-color: #3e8e41;
+  }

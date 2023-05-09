@@ -95,7 +95,31 @@ const listarProd = async (req, res) => {
         res.status(500).json({ mensaje: 'Error al obtener productos restringidos' });
       }
     };
-    
+
+//---------------------------------------------------------------------------Actualizar Stock
+const actualizarCantidad = async (req, res) => {
+  const listaProductos = req.body;
+  let productosActualizados = [];
+
+  try {
+    for (let i = 0; i < listaProductos.length; i++) {
+      const producto = listaProductos[i];
+      const { nombre, cantidad_existente } = producto;
+      const prod = await Productos.findOne({ nombre: nombre });
+      const cantidad_actualizada = prod.cantidad_existente - cantidad_existente;
+      const prodActualizado = await Productos.findOneAndUpdate(
+        { nombre: nombre },
+        { cantidad_existente: cantidad_actualizada },
+        { new: true }
+      );
+      productosActualizados.push(prodActualizado);
+    }
+    res.json(productosActualizados);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+};   
 //----------------------------------------------------------------------------Eliminar
 const eliminarProducto = async (req, res) => {
   const { id } = req.params; // Obtener el ID del producto a eliminar
@@ -185,5 +209,6 @@ const storage = multer.diskStorage({
     prodCancelado: prodCancelado,
     eliminarProducto: eliminarProducto,
     prodCanceladoid: prodCanceladoid,
-    prodCanceladoId: prodCanceladoId
+    prodCanceladoId: prodCanceladoId,
+    actualizarCantidad: actualizarCantidad
   }

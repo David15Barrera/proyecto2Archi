@@ -6,7 +6,9 @@
         <meta name="description" contents="ARCH PROYECTO">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">    </head>
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">    
+        <link rel="stylesheet" href="../../css/StyleCom.css" type="text/css">    
+    </head>
     <body>
         <nav class="nav__hero">
             <div class="container nav__container">
@@ -14,8 +16,8 @@
                   <a href="../comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
                 </div>
                 <div class="links">
-                  <a href="../comun/prodCom.html" class="link">Comprados</a>
-                    <a href="#" class="link">Productos</a>
+                    <a href="#" class="link">Comprados</a>
+                    <a href="../comun/produts.html" class="link">Productos</a>
                     <a href="../comun/prodSub.html" class="link">Vender</a>
                     <a href="../comun/prodFin.html" class="link">Finalizar</a>
                     <a href="../login.html" class="link link--active">Cerrar Sesion</a>
@@ -27,17 +29,15 @@
 <br>
 <br>
 <br>
+<center><h1>Productos Adquiridos</h1></center>
+<br>
+<table class="tabla-pedidos">
+    <tbody>
+      <!-- aquí se generan las filas de la tabla con JavaScript -->
+      <div id="pedidos"></div>
+    </tbody>
+  </table>
 
-<div class="search-box">
-  <input type="text" id="my-search-input" placeholder="Buscar">
-  <button id="my-search-btn"><i class="fa fa-search"></i></button>
-</div>
-
-  <div id="productos-container">
-    <!-- Productos se mostrarán aquí -->
-  </div>
-
-
-    <script src="../../js/comunProd.js"></script>
+    <script src="../../js/comunCom.js"></script>
     </body>
 </html>

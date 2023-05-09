@@ -5,6 +5,10 @@ const router = express.Router();
 const multer = require('multer');
 
 router.post('/finalizar', controller.crearPedido);
-
-
+router.get('/obtener/:dpi', controller.obtenerPedidosPorDPI);
+router.get('/obtenerAll', controller.obtenerPedidos);
+router.post('/actFechEst/:id', controller.actuPedido);
+//--------Reportes
+router.get('/top', controller.obtenerTopProductosVendidos);
+router.get('/topclientes', controller.obtenerTopClientes);
 module.exports = router;
