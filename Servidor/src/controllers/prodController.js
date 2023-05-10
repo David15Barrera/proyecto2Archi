@@ -157,7 +157,35 @@ async function agregarProducto(req, res) {
     res.status(400).send(error);
   }
 }
-  
+
+//----------------------------------------------------------------------------Reporte
+const reporte4 = async (req, res) => {
+  try {
+    // Obtener todos los productos agrupados por vendedor
+    const productosPorVendedor = await Productos.aggregate([
+      {
+        $group: {
+          _id: '$vendedor.DPI',
+          nombre_vendedor: { $first: '$vendedor.nombre' },
+          cantidad_productos: { $sum: 1 }
+        }
+      },
+      {
+        $sort: {
+          cantidad_productos: -1
+        }
+      },
+      {
+        $limit: 10
+      }
+    ]);
+
+    res.json(productosPorVendedor);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+};
 
  //------------------Para obtener los datos del producto-------------- 
 
@@ -210,5 +238,6 @@ const storage = multer.diskStorage({
     eliminarProducto: eliminarProducto,
     prodCanceladoid: prodCanceladoid,
     prodCanceladoId: prodCanceladoId,
-    actualizarCantidad: actualizarCantidad
+    actualizarCantidad: actualizarCantidad,
+    reporte4: reporte4
   }

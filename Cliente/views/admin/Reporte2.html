@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Editar</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../../css/buscar.css" type="text/css"> 
+    </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="../admin.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="../admin/Usuarios.html" class="link">Usuarios</a>
+                    <a href="../admin/Reporte.html" class="link">Reportes</a>
+                    <a href="#" class="link">Reportes</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+<center><h1> Reportes </h1></center>
+<br>
+<h2>  <label for="fechaInicio">Top 10 clientes que más pedidos han realizado en un intervalo de tiempo</label></h2>
+<br>
+<br>
+<label for="fechaInicioTop">Fecha de inicio:</label>
+<input type="date" id="fechaInicioTop">
+
+<label for="fechaFinTop">Fecha de fin:</label>
+<input type="date" id="fechaFinTop">
+
+<button id="verBtnTop">Ver</button>
+
+<table id="tablaTop10Cli">
+  <thead>
+    <tr>
+      <th>Dpi</th>
+      <th>Usuario</th>
+      <th>Cantidad</th>
+    </tr>
+  </thead>
+  <tbody id="bodyTablaTop10Cli"></tbody>
+</table>
+<br>
+<br>
+<h2>  <label for="fechaInicio">Top 10 clientes que más productos tienen a la venta</label></h2>
+<br>
+<table id="tablaTopProd">
+    <thead>
+      <tr>
+        <th>Dpi</th>
+        <th>Nombre Vendedor</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody id="bodyTablaTopProd"></tbody>
+  </table>
+<script>
+//----------------------------------------------------------------------- Reporte 3
+const verBtnTop = document.getElementById('verBtnTop');
+ const fechaInicioTop = document.getElementById('fechaInicioTop');
+ const fechaFinTop = document.getElementById('fechaFinTop');
+ const bodyTablaTop10Cli = document.getElementById('bodyTablaTop10Cli');
+
+ verBtnTop.addEventListener('click', async () => {
+   const fechaInicio = new Date(fechaInicioTop.value);
+ const fechaFin = new Date(fechaFinTop.value);
+ const fechaInicioFormatted = fechaInicio.toISOString().split('T')[0];
+ const fechaFinFormatted = fechaFin.toISOString().split('T')[0];
+
+   try {
+     const response = await fetch(`http://localhost:3000/pedido/toppedidos?fechaInicio=${fechaInicioFormatted}&fechaFin=${fechaFinFormatted}`);
+     const data = await response.json();
+
+     // Limpiar la tabla
+     bodyTablaTop10Cli.innerHTML = '';
+
+     // Llenar la tabla con los resultados
+     data.forEach((cliente) => {
+       const tr = document.createElement('tr');
+       const tdDpi = document.createElement('td');
+       const tdNombre = document.createElement('td');
+       const tdCantidad = document.createElement('td');
+
+       tdDpi.textContent = cliente[0];
+       tdNombre.textContent = cliente[1].nombre_usuario;
+       tdCantidad.textContent = cliente[1].cantidad;
+
+       tr.appendChild(tdDpi);
+       tr.appendChild(tdNombre);
+       tr.appendChild(tdCantidad);
+
+       bodyTablaTop10Cli.appendChild(tr);
+     });
+   } catch (error) {
+     console.error(error);
+   }
+ });
+
+const tablaTopProd = document.getElementById('tablaTopProd');
+const bodyTablaTopProd = document.getElementById('bodyTablaTopProd');
+
+const urlTopProd = 'http://localhost:3000/prod/topproductos';
+
+// Función para mostrar los datos en la tabla
+const mostrarTopProd = (data) => {
+  // Limpiar el cuerpo de la tabla
+  bodyTablaTopProd.innerHTML = '';
+
+  // Recorrer los datos y crear una fila por cada uno
+  data.forEach((row) => {
+    const { _id, nombre_vendedor, cantidad_productos } = row;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${_id}</td>
+      <td>${nombre_vendedor}</td>
+      <td>${cantidad_productos}</td>
+    `;
+    bodyTablaTopProd.appendChild(tr);
+  });
+};
+
+// Función para obtener los datos y mostrarlos en la tabla
+const obtenerTopProd = async () => {
+  try {
+    const response = await fetch(urlTopProd);
+    const data = await response.json();
+    mostrarTopProd(data);
+  } catch (error) {
+    console.error(error.message);
+  }
+};
+
+// Mostrar los datos al cargar la página
+obtenerTopProd();
+</script>
+
+   </body>
+</html>

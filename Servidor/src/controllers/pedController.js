@@ -113,6 +113,7 @@ const obtenerTopProductosVendidos = async (req, res) => {
   }
 };
 
+// Reportes 2
 const obtenerTopClientes = async (req, res) => {
   const { fechaInicio, fechaFin } = req.query;
 
@@ -147,11 +148,113 @@ const obtenerTopClientes = async (req, res) => {
   }
 };
 
+//Reporte 3
+const reporte3 = async (req, res) => {
+  const { fechaInicio, fechaFin } = req.query;
+
+  try {
+    const pedidos = await Pedido.find({
+      fecha_compra: { $gte: new Date(fechaInicio), $lte: new Date(fechaFin) }
+    });
+
+    // Crear un objeto para contar los pedidos por cliente
+    const pedidosPorCliente = {};
+
+    // Contar los pedidos por cliente
+    pedidos.forEach(pedido => {
+      const { dpi, nombre_usuario } = pedido;
+      if (pedidosPorCliente[dpi]) {
+        pedidosPorCliente[dpi].cantidad += 1;
+      } else {
+        pedidosPorCliente[dpi] = { nombre_usuario, cantidad: 1 };
+      }
+    });
+
+    // Ordenar los clientes por cantidad de pedidos de mayor a menor
+    const clientesOrdenados = Object.entries(pedidosPorCliente).sort((a, b) => b[1] - a[1]);
+
+    // Obtener los top 10 clientes con más pedidos realizados
+    const topClientes = clientesOrdenados.slice(0, 10);
+
+    res.json(topClientes);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+};
+
+//reporte 4
+
+const topClientesPorVentas = async (req, res) => {
+  try {
+    const { fechaInicial, fechaFinal } = req.query;
+
+    const topClientes = await Pedido.aggregate([
+      {
+        $match: {
+          fecha_compra: {
+            $gte: new Date(fechaInicial),
+            $lte: new Date(fechaFinal)
+          }
+        }
+      },
+      {
+        $unwind: '$productos_comprados'
+      },
+      {
+        $lookup: {
+          from: 'productos',
+          localField: 'productos_comprados.nombre_producto',
+          foreignField: 'nombre',
+          as: 'producto'
+        }
+      },
+      {
+        $unwind: '$producto'
+      },
+      {
+        $lookup: {
+          from: 'usuarios',
+          localField: 'producto.usuario_id',
+          foreignField: '_id',
+          as: 'usuario'
+        }
+      },
+      {
+        $unwind: '$usuario'
+      },
+      {
+        $group: {
+          _id: '$usuario.dpi',
+          nombre_usuario: { $first: '$usuario.nombre' },
+          cantidad_vendida: { $sum: '$productos_comprados.cantidad' }
+        }
+      },
+      {
+        $sort: {
+          cantidad_vendida: -1
+        }
+      },
+      {
+        $limit: 5
+      }
+    ]);
+
+    res.status(200).json({ success: true, data: topClientes });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, error: 'Error del servidor' });
+  }
+};
+  
+
   module.exports = {
     crearPedido: crearPedido,
     obtenerPedidosPorDPI: obtenerPedidosPorDPI,
     obtenerPedidos: obtenerPedidos,
     actuPedido: actuPedido,
     obtenerTopProductosVendidos: obtenerTopProductosVendidos,
-    obtenerTopClientes: obtenerTopClientes
+    obtenerTopClientes: obtenerTopClientes,
+    reporte3: reporte3,
+    topClientesPorVentas: topClientesPorVentas
   };

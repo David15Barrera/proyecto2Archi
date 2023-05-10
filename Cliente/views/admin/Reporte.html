@@ -18,6 +18,7 @@
                 <div class="links">
                     <a href="../admin/Usuarios.html" class="link">Usuarios</a>
                     <a href="#" class="link">Reportes</a>
+                    <a href="../admin/Reporte2.html" class="link">Reportes</a>
                     <a href="../login.html" class="link link--active">Cerrar Sesion</a>
                 </div>
             </div>
@@ -68,6 +69,7 @@
 <br>
 <br>
 <script>
+ //----------------------------------------------------------------------- Reporte 1 
   const fechaInicioInput = document.getElementById('fechaInicio');
   const fechaFinInput = document.getElementById('fechaFin');
   const verBtn = document.getElementById('verBtn');
@@ -101,7 +103,7 @@
       })
       .catch(error => console.error(error));
   });
-
+ //----------------------------------------------------------------------- Reporte 2
 const tablaTop5 = document.getElementById('tablaTop5');
 const fechaInicioCli = document.getElementById('fechaInicioCli');
 const fechaFinCli = document.getElementById('fechaFinCli');
@@ -122,7 +124,7 @@ verBtnCli.addEventListener('click', async () => {
   while (tablaTop5.tBodies[0].hasChildNodes()) {
     tablaTop5.tBodies[0].removeChild(tablaTop5.tBodies[0].firstChild);
   }
-
+  const tr = document.createElement('tr');
   // Mostrar los datos en la tabla
   for (const [dpi, cliente] of data) {
     const fila = document.createElement('tr');

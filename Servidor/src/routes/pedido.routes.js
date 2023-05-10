@@ -11,4 +11,6 @@ router.post('/actFechEst/:id', controller.actuPedido);
 //--------Reportes
 router.get('/top', controller.obtenerTopProductosVendidos);
 router.get('/topclientes', controller.obtenerTopClientes);
+router.get('/toppedidos', controller.reporte3);
+router.get('/topprodclientes', controller.topClientesPorVentas);
 module.exports = router;

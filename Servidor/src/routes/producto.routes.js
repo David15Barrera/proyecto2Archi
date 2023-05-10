@@ -17,7 +17,8 @@ router.delete('/eliminar/:id', controller.eliminarProducto);
 router.get('/prodCancelado/:DPI', controller.prodCanceladoid);
 router.put('/actualizarcantidad', controller.actualizarCantidad);
 
-
+//Reporte 
+router.get('/topproductos', controller.reporte4);
 //Revisar el metodo de enviado de imagen, la ruta no responde
 
 router.post('/saveprod', controller.upload.single('imagen'), function (req, res) {
