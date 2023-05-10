@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <TItle>Comun</TItle>
+        <meta name="description" contents="ARCH PROYECTO">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../css/styleIndex.css" type="text/css">
+        <link rel="stylesheet" href="../../css/Styleedit.css" type="text/css"> 
+       </head>
+    <body>
+        <nav class="nav__hero">
+            <div class="container nav__container">
+                <div class="logo">
+                  <a href="../../views/comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
+                </div>
+                <div class="links">
+                    <a href="#" class="link">Mis Productos</a>
+                    <a href="../comun/prodCom.html" class="link">Comprados</a>
+                    <a href="../comun/produts.html" class="link">Productos</a>
+                    <a href="../comun/prodSub.html" class="link">Vender</a>
+                    <a href="../comun/prodFin.html" class="link">Finalizar</a>
+                    <a href="../login.html" class="link link--active">Cerrar Sesion</a>
+                </div>
+            </div>
+        </nav>
+<br>
+<br>
+<br>
+<br>
+<center><h1>Modificar un producto en venta</h1></center>
+<br>
+<form id="historia-form" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="nombre">Nombre del producto:</label>
+    <input type="text" name="nombre" id="nombre" required>
+  </div>
+  <div class="form-group">
+    <label for="descripcion">Descripción:</label>
+    <textarea name="descripcion" id="descripcion" required></textarea>
+  </div>
+  <div class="form-group">
+    <label for="precio">Precio</label>
+    <input type="number" name="precio" id="precio" step="0.01" required>
+  </div>
+  <div class="form-group">
+    <label for="cantidad_existente">Cantidad disponible</label>
+    <input type="number" name="cantidad_existente" id="cantidad_existente" required>
+  </div>
+  <div class="form-group">
+    <label for="categorias">Categoria</label>
+    <select name="categoria" id="categorias">
+      <option value="Tecnologia">Tecnología</option>
+      <option value="Hogar">Hogar</option>
+      <option value="Academico">Academico</option>
+      <option value="Literatura">Literatura</option>
+      <option value="Decoracion">Decoracion</option>
+      <option value="Otros">Otros</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Modificar">
+  </div>
+</form>
+<br>
+<br>
+<br>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        console.log(`El id del producto es ${id}`);
+
+        const form = document.getElementById('historia-form');
+        const nombreInput = document.getElementById('nombre');
+        const descripcionInput = document.getElementById('descripcion');
+        const precioInput = document.getElementById('precio');
+        const cantidadExistenteInput = document.getElementById('cantidad_existente');
+        const categoriaSelect = document.getElementById('categorias');
+
+        fetch(`http://localhost:3000/prod/getprodMod/${id}`)
+    .then(response => response.json())
+    .then(data => {
+      const producto = data.data;
+      nombreInput.value = producto.nombre;
+      descripcionInput.value = producto.descripcion;
+      precioInput.value = producto.precio;
+      cantidadExistenteInput.value = producto.cantidad_existente;
+      const options = categoriaSelect.options;
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].value === producto.categorias[0]) {
+      options[i].selected = true;
+      break;
+    }
+  }
+    })
+    .catch(error => console.error(error));
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    console.log("Hola");
+    const nombre = nombreInput.value;
+  const descripcion = descripcionInput.value;
+  const precio = precioInput.value;
+  const cantidad_existente = cantidadExistenteInput.value;
+  const categoria = categoriaSelect.value;
+  const estado = "enviado";
+  const id = urlParams.get('id');
+  console.log(id);
+  const data = {
+    nombre,
+    descripcion,
+    precio,
+    cantidad_existente,
+    categorias: [categoria],
+    estado: estado
+  };
+  fetch(`http://localhost:3000/prod/modproductos/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Aquí puedes hacer algo con la respuesta del servidor
+  })
+  .catch(error => console.error(error));
+  });
+
+    </script>
+    </body>
+</html>

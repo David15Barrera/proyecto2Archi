@@ -136,6 +136,37 @@ const getProductosPorUsuario = async (req, res) => {
   }
 };
 
+const obtenerProductoPorId = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const producto = await Productos.findById(id);
+    if (!producto) {
+      return res.status(404).json({ error: 'Producto no encontrado' });
+    }
+    res.json({ data: producto });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener el producto' });
+  }
+};
+
+const modificarProducto = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, precio, img, descripcion, vendedor, categorias, cantidad_existente, estado } = req.body;
+    
+    const productoActualizado = await Productos.findByIdAndUpdate(id, { nombre, precio, img, descripcion, vendedor, categorias, cantidad_existente, estado }, { new: true });
+    
+    if (!productoActualizado) {
+      return res.status(404).json({ mensaje: 'No se encontró el producto con el ID proporcionado' });
+    }
+    
+    res.status(200).json({ mensaje: 'Producto actualizado exitosamente', producto: productoActualizado });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ mensaje: 'Hubo un error al procesar la solicitud' });
+  }
+};
 //----------------------------------------------------------------------------Eliminar
 const eliminarProducto = async (req, res) => {
   const { id } = req.params; // Obtener el ID del producto a eliminar
@@ -256,6 +287,8 @@ const storage = multer.diskStorage({
     prodCanceladoId: prodCanceladoId,
     actualizarCantidad: actualizarCantidad,
     reporte4: reporte4,
-    getProductosPorUsuario: getProductosPorUsuario
+    getProductosPorUsuario: getProductosPorUsuario,
+    obtenerProductoPorId: obtenerProductoPorId,
+    modificarProducto: modificarProducto
 
   }

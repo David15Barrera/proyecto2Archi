@@ -14,6 +14,8 @@
                   <a href="../comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
                 </div>
                 <div class="links">
+                    <a href="../comun/misProd.html" class="link">Mis Productos</a>
+                    <a href="../comun/prodCom.html" class="link">Comprados</a>
                     <a href="../comun/produts.html" class="link">Productos</a>
                     <a href="../comun/prodSub.html" class="link">Vender</a>
                     <a href="../comun/prodFin.html" class="link">Finalizar</a>
@@ -67,7 +69,7 @@ fetch(url)
       const botonesElem = document.createElement('div');
       botonesElem.innerHTML = `
         <button class="Red" id="btnEliminar-${producto._id}">Eliminar</button>
-        <button class="green" id="btnModificar-${producto._id}">Modificar</button>
+            <button class="green" id="btnModificar-${producto._id}">Modificar</button>
       `;
       botonesElem.style.display = 'block';
       // Agregar el elemento de los botones y el elemento de los datos del producto al contenedor de producto
@@ -97,6 +99,13 @@ fetch(url)
             console.error('Error al eliminar el producto:', error);
           });
       });
+
+      const btnModificar = document.getElementById(`btnModificar-${producto._id}`);
+        btnModificar.addEventListener('click', () => {
+        // Redirigir a la página modProd.html y pasar el id del producto como parámetro
+        location.href = `modProd.html?id=${producto._id}`;
+        
+});
 
     });
   })
