@@ -1,4 +1,5 @@
 const multer = require('multer');
+const mongoose = require('mongoose');
 const Producto = require('../models/Productos');
 const Carrito = require('../models/carrito');
 
@@ -27,32 +28,42 @@ const agregarProducto = async (req, res) => {
 
 
 const carritoAgreg = async (req, res) => {
-    const { id, nombre, cantidad } = req.body;
-    const { dpi } = req.params;
-  
-    try {
-      const carrito = await Carrito.findOne({ dpi });
-  
-      // Buscar si el producto ya está en el carrito
-      const productoExistente = carrito.productos_agregados.find(p => p._id == id);
-  
-      if (productoExistente) {
-        // Si el producto ya está en el carrito, solo actualizar la cantidad
-        productoExistente.cantidad += parseInt(cantidad);
-      } else {
-        // Si el producto no está en el carrito, agregarlo
-        const productoNuevo = { _id: id, nombre, cantidad: parseInt(cantidad) };
-        carrito.productos_agregados.push(productoNuevo);
-      }
-  
-      await carrito.save();
-      res.json({ mensaje: 'Producto agregado al carrito correctamente' });
-  
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ mensaje: 'Error al agregar el producto al carrito' });
+  const { id, nombre, cantidad } = req.body;
+  const { dpi } = req.params;
+
+  try {
+    let carrito = await Carrito.findOne({ dpi });
+
+    if (!carrito) {
+      // Si el carrito no existe, crear uno nuevo
+      const nuevoCarrito = new Carrito({
+        _id: new mongoose.Types.ObjectId(),
+        dpi,
+        productos_agregados: [{ _id: id, nombre, cantidad: parseInt(cantidad) }]
+      });
+      await nuevoCarrito.save();
+      return res.json({ mensaje: 'Producto agregado al carrito correctamente' });
     }
-  };
+    // Buscar si el producto ya está en el carrito
+    const productoExistente = carrito.productos_agregados.find(p => p._id == id);
+
+    if (productoExistente) {
+      // Si el producto ya está en el carrito, solo actualizar la cantidad
+      productoExistente.cantidad += parseInt(cantidad);
+    } else {
+      // Si el producto no está en el carrito, agregarlo
+      const productoNuevo = { _id: id, nombre, cantidad: parseInt(cantidad) };
+      carrito.productos_agregados.push(productoNuevo);
+    }
+
+    await carrito.save();
+    res.json({ mensaje: 'Producto agregado al carrito correctamente' });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: 'Error al agregar el producto al carrito' });
+  }
+};
   
   const obtenerCarrito = async (req, res) => {
     const { dpi } = req.params;
