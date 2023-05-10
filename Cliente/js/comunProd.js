@@ -86,7 +86,7 @@ console.log(datos);
       // Crear un elemento HTML para los botones del producto
       const botonesElem = document.createElement('div');
       botonesElem.innerHTML = `
-        <button class="Red" id="btnEliminar">Eliminar</button>
+      <button class="Red" id="btnEliminar-${producto._id}">Eliminar</button>
       `;
       botonesElem.style.display = 'block';
 
@@ -95,7 +95,7 @@ console.log(datos);
       productocontainerCan.appendChild(productoElem);
       productoscontainerCan.appendChild(productocontainerCan);
 
-      const btnEliminar = document.getElementById('btnEliminar');
+      const btnEliminar = document.getElementById(`btnEliminar-${producto._id}`);
       btnEliminar.addEventListener('click', () => {
         // Hacer una petición DELETE al backend para eliminar el producto
         const url = `http://localhost:3000/prod/eliminar/${producto._id}`;

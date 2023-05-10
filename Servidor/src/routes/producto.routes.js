@@ -17,6 +17,7 @@ router.delete('/eliminar/:id', controller.eliminarProducto);
 router.get('/prodCancelado/:DPI', controller.prodCanceladoid);
 router.put('/actualizarcantidad', controller.actualizarCantidad);
 
+router.get('/getprodid/:dpi', controller.getProductosPorUsuario);
 //Reporte 
 router.get('/topproductos', controller.reporte4);
 //Revisar el metodo de enviado de imagen, la ruta no responde

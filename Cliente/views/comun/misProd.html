@@ -26,11 +26,83 @@
 <br>
 <br>
 <br>
-
+<center><h2>Mis Productos</h2></center>
+<div id="productos-container">
+    <!-- Productos se mostrarán aquí -->
+  </div>
 
     <script>
-        const DPI = localStorage.getItem('dpi');
-        console.log(DPI);
+const DPI = localStorage.getItem('dpi');
+console.log(DPI);
+const url = `http://localhost:3000/prod/getprodid/${DPI}`;
+fetch(url)
+  .then(respuesta => respuesta.json())
+  .then(datos => {
+    const productoscontainer = document.getElementById('productos-container');
+    console.log(datos);
+    // Iterar sobre los datos de los productos
+    datos.data.forEach(producto => {
+      // Crear un contenedor para cada producto
+      const productocontainer = document.createElement('div');
+      productocontainer.classList.add('producto-container');
+
+      // Crear un elemento HTML para mostrar la imagen del producto
+      const imgElem = document.createElement('img');
+      const rutaBase = 'http://localhost:3000';
+      const rutaImagen = producto.img;
+      imgElem.src = rutaBase + rutaImagen;
+
+      // Agregar la imagen al contenedor de producto
+      productocontainer.appendChild(imgElem);
+
+      // Crear un elemento HTML para mostrar los datos del producto
+      const productoElem = document.createElement('div');
+      productoElem.innerHTML = `
+        <center><h3>${producto.nombre}</h3></center>
+        <p>Precio: Q${producto.precio}</p>
+        <p>Categorías: ${producto.categorias.join(', ')}</p>
+        <p>Estado: ${producto.estado}</p>
+      `;
+      // Crear un elemento HTML para los botones del producto
+      const botonesElem = document.createElement('div');
+      botonesElem.innerHTML = `
+        <button class="Red" id="btnEliminar-${producto._id}">Eliminar</button>
+        <button class="green" id="btnModificar-${producto._id}">Modificar</button>
+      `;
+      botonesElem.style.display = 'block';
+      // Agregar el elemento de los botones y el elemento de los datos del producto al contenedor de producto
+      productoElem.appendChild(botonesElem);
+      productocontainer.appendChild(productoElem);
+      productoscontainer.appendChild(productocontainer);
+      
+      const btnEliminar = document.getElementById(`btnEliminar-${producto._id}`);
+      btnEliminar.addEventListener('click', () => {
+        // Hacer una petición DELETE al backend para eliminar el producto
+        const url = `http://localhost:3000/prod/eliminar/${producto._id}`;
+        fetch(url, { method: 'DELETE' })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Producto eliminado:', data);
+            // Mostrar alerta
+            alert('Producto eliminado exitosamente');
+            // Eliminar el contenedor del producto de la interfaz
+            productocontainer.remove();
+          })
+          .catch(error => {
+            console.error('Error al eliminar el producto:', error);
+          });
+      });
+
+    });
+  })
+  .catch(error => {
+    console.error(error);
+  });
     </script>
     </body>
 </html>

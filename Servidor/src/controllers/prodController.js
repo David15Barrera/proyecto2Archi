@@ -119,7 +119,23 @@ const actualizarCantidad = async (req, res) => {
     console.error(error.message);
     res.status(500).json({ error: 'Error del servidor' });
   }
-};   
+};
+//---------------------------------------------------------------------------- Para ver los productos
+const getProductosPorUsuario = async (req, res) => {
+  try {
+    const dpi = req.params.dpi;
+
+    const productos = await Productos.find({
+      'vendedor.DPI': dpi
+    });
+
+    res.status(200).json({ success: true, data: productos });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ success: false, error: 'Error del servidor' });
+  }
+};
+
 //----------------------------------------------------------------------------Eliminar
 const eliminarProducto = async (req, res) => {
   const { id } = req.params; // Obtener el ID del producto a eliminar
@@ -239,5 +255,7 @@ const storage = multer.diskStorage({
     prodCanceladoid: prodCanceladoid,
     prodCanceladoId: prodCanceladoId,
     actualizarCantidad: actualizarCantidad,
-    reporte4: reporte4
+    reporte4: reporte4,
+    getProductosPorUsuario: getProductosPorUsuario
+
   }
