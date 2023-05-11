@@ -29,3 +29,15 @@ fetch('http://localhost:3000/api/buscar', {
   cargoDiv.innerText = `Cargo: ${cargoUsuario}`;
 })
 .catch(error => console.log(error));
+
+const botonCerrarSesion = document.querySelector('.link--active');
+ 
+  botonCerrarSesion.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('dpi'); // Agrega esta línea para borrar el DPI
+  sessionStorage.removeItem('token');
+  alert("Saliendo");
+ 
+  // Redirigir al usuario a la página de inicio de sesión o a la página principal
+  window.location.href = '/login';
+});

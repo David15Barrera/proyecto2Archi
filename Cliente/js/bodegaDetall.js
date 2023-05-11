@@ -110,3 +110,15 @@ fetch(`http://localhost:3000/prod/detalles/${productId}`)
   .catch(error => {
     console.error(error);
   });
+
+  const botonCerrarSesion = document.querySelector('.link--active');
+ 
+  botonCerrarSesion.addEventListener('click', () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('dpi'); // Agrega esta línea para borrar el DPI
+  sessionStorage.removeItem('token');
+  alert("asdasd");
+ 
+  // Redirigir al usuario a la página de inicio de sesión o a la página principal
+  window.location.href = '/login';
+});
