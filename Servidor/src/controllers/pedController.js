@@ -187,66 +187,39 @@ const reporte3 = async (req, res) => {
 
 const topClientesPorVentas = async (req, res) => {
   try {
-    const { fechaInicial, fechaFinal } = req.query;
-
+    const { fecha_inicio, fecha_fin } = req.query;
     const topClientes = await Pedido.aggregate([
       {
         $match: {
           fecha_compra: {
-            $gte: new Date(fechaInicial),
-            $lte: new Date(fechaFinal)
+            $gte: new Date(fecha_inicio),
+            $lte: new Date(fecha_fin)
           }
         }
       },
       {
-        $unwind: '$productos_comprados'
-      },
-      {
-        $lookup: {
-          from: 'productos',
-          localField: 'productos_comprados.nombre_producto',
-          foreignField: 'nombre',
-          as: 'producto'
-        }
-      },
-      {
-        $unwind: '$producto'
-      },
-      {
-        $lookup: {
-          from: 'usuarios',
-          localField: 'producto.usuario_id',
-          foreignField: '_id',
-          as: 'usuario'
-        }
-      },
-      {
-        $unwind: '$usuario'
+        $unwind: "$productos_comprados"
       },
       {
         $group: {
-          _id: '$usuario.dpi',
-          nombre_usuario: { $first: '$usuario.nombre' },
-          cantidad_vendida: { $sum: '$productos_comprados.cantidad' }
+          _id: "$dpi",
+          nombre_usuario: { $first: "$nombre_usuario" },
+          cantidad: { $sum: "$productos_comprados.cantidad" }
         }
       },
       {
-        $sort: {
-          cantidad_vendida: -1
-        }
+        $sort: { cantidad: -1 }
       },
       {
         $limit: 5
       }
     ]);
-
-    res.status(200).json({ success: true, data: topClientes });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ success: false, error: 'Error del servidor' });
+    res.json(topClientes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error al obtener el Top 5 de clientes');
   }
-};
-  
+}; 
 
   module.exports = {
     crearPedido: crearPedido,

@@ -68,6 +68,26 @@
 </table>
 <br>
 <br>
+<h2>  <label for="fechaInicio">Top 5 clientes que más productos han vendido en un intervalo de tiempo.</label></h2>
+<br>
+<label for="fechaInCli">Fecha de inicio:</label>
+<input type="date" id="fechaInCli">
+
+<label for="fechaFCli">Fecha de fin:</label>
+<input type="date" id="fechaFCli">
+
+<button id="verBtnFCli">Ver</button>
+<br>
+<br>
+<table id="tablaTop5F">
+  <tr>
+    <th>Dpi</th>
+    <th>Usuario</th>
+    <th>Cantidad</th>
+  </tr>
+</table>
+<br>
+<br>
 <script>
  //----------------------------------------------------------------------- Reporte 1 
   const fechaInicioInput = document.getElementById('fechaInicio');
@@ -140,6 +160,47 @@ verBtnCli.addEventListener('click', async () => {
     tablaTop5.tBodies[0].appendChild(fila);
   }
 });
+
+
+      const verBtnFCli = document.querySelector('#verBtnFCli');
+      const fechaInCli = document.querySelector('#fechaInCli');
+      const fechaFCli = document.querySelector('#fechaFCli');
+      const tablaTop5F = document.querySelector('#tablaTop5F');
+
+      verBtnFCli.addEventListener('click', async () => {
+        const fechaInicio = new Date(fechaInCli.value);
+        const fechaFin = new Date(fechaFCli.value);
+        const fechaInicioFormatted = fechaInicio.toISOString().split('T')[0];
+        const fechaFinFormatted = fechaFin.toISOString().split('T')[0];
+        console.log(fechaInicioFormatted);
+        console.log(fechaFinFormatted);
+
+        const url = `http://localhost:3000/pedido/topClientesPorVentas?fecha_inicio=${fechaInicioFormatted}&fecha_fin=${fechaFinFormatted}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        while (tablaTop5F.tBodies[0].hasChildNodes()) {
+          tablaTop5F.tBodies[0].removeChild(tablaTop5F.tBodies[0].firstChild);
+         }  
+         const tr = document.createElement('tr');
+  // Mostrar los datos en la tabla
+  for (const cliente of data) {
+  const fila = document.createElement('tr');
+  const celdaDpi = document.createElement('td');
+  const celdaNombreUsuario = document.createElement('td');
+  const celdaCantidad = document.createElement('td');
+  celdaDpi.textContent = cliente._id;
+  celdaNombreUsuario.textContent = cliente.nombre_usuario;
+  celdaCantidad.textContent = cliente.cantidad;
+  fila.appendChild(celdaDpi);
+  fila.appendChild(celdaNombreUsuario);
+  fila.appendChild(celdaCantidad);
+  tablaTop5F.tBodies[0].appendChild(fila);
+}
+
+
+      });
+    </script>
 </script>
 
     </body>

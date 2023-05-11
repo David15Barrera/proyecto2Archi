@@ -186,10 +186,12 @@ const agregarProducto = async (req, res) => {
     const { nombre, precio, descripcion, cantidad_existente, categoria } = req.body;
     const vendedor = req.user ? { nombre: req.user.nombre, DPI: req.user.DPI } : {};
 
+    const imgPath = req.file ? req.file.path : null;
+
     const producto = new Productos({
       nombre,
       precio,
-      img: req.file.path,
+      img: imgPath,
       descripcion,
       vendedor,
       categorias: categoria.split(',').map((c) => c.trim()),
@@ -276,7 +278,7 @@ const storage = multer.diskStorage({
     getImgProducto:getImgProducto,
     prodDisponibles: prodDisponibles,
     obtenerProducto: obtenerProducto,
-    upload:upload,
+  //  upload:upload,
     prodAprobar: prodAprobar,
     agregarProducto: agregarProducto,
     prodEnviado: prodEnviado,

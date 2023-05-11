@@ -153,3 +153,42 @@
     border-bottom: 1px solid #ddd;
     padding: 8px;
   }
+
+    /*------------------------------------------------------------------------- Para la tercera tabla*/
+ #tablaTop5F {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#tablaTop5F th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px;
+  text-align: left;
+}
+
+#tablaTop5F td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+}
+
+  /* Estilos para el botón */
+  #verBtnFCli {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  #verBtnFCli:hover {
+    background-color: #3e8e41;
+  }

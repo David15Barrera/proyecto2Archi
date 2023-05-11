@@ -34,7 +34,7 @@ router.get('/topproductos', controller.reporte4);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './img/imgproductos');
+    cb(null, './controllers/img/imgproductos');
   },
   filename: (req, file, cb) => {
     const extension = file.originalname.split('.').pop();

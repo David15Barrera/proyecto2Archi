@@ -133,19 +133,22 @@ const formulario = document.getElementById('historia-form');
 formulario.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const data = new FormData(formulario);
-
+  const formData = new FormData();
+  formData.append('nombre', document.getElementById('nombre').value);
+  formData.append('precio', document.getElementById('precio').value);
+  formData.append('descripcion', document.getElementById('descripcion').value);
+  formData.append('cantidad_existente', document.getElementById('cantidad_existente').value);
+  formData.append('categoria', document.getElementById('categorias').value);
+  formData.append('imagen', document.getElementById('imagen').files[0]);
+  
   fetch('http://localhost:3000/prod/agproductos', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    body: data,
+    body: formData
   })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
       formulario.reset();
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 });
