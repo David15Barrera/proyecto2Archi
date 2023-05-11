@@ -1,0 +1,144 @@
+ {
+    _id: ObjectId("6458b6bb4abf1c01cc399f5c"),
+    dpi: 456781234567,
+    nombre_usuario: 'Fernando',
+    productos_comprados: [
+      {
+        nombre_producto: 'Relor de mano',
+        cantidad: 2,
+        _id: ObjectId("6458b6bb4abf1c01cc399f5d")
+      },
+      {
+        nombre_producto: 'Laptop Vostro 3400 14 Plg',
+        cantidad: 3,
+        _id: ObjectId("6458b6bb4abf1c01cc399f5e")
+      }
+    ],
+    lugar_envio: 'Quetzaltenango',
+    fecha_compra: ISODate("2023-05-08T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-09T00:00:00.000Z"),
+    Total: 12000,
+    TotalPag: 11400,
+    TotalCli: 600,
+    estado_pedido: 'Entregado'
+  },
+  {
+    _id: ObjectId("6459e70078b61e8c2579a127"),
+    dpi: 456781234567,
+    nombre_usuario: 'Fernando',
+    productos_comprados: [
+      {
+        nombre_producto: 'Xiaomi 12t',
+        cantidad: 1,
+        _id: ObjectId("6459e70078b61e8c2579a128")
+      }
+    ],
+    lugar_envio: 'Guatemala',
+    fecha_compra: ISODate("2023-05-09T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-09T00:00:00.000Z"),
+    Total: 2001,
+    TotalPag: 1900.9499999999998,
+    TotalCli: 100.05000000000001,
+    estado_pedido: 'Entregado'
+  },
+  {
+    _id: ObjectId("6459e73f78b61e8c2579a13e"),
+    dpi: 456781234567,
+    nombre_usuario: 'Fernando',
+    productos_comprados: [
+      {
+        nombre_producto: 'Laptop Vostro 3400 14 Plg',
+        cantidad: 1,
+        _id: ObjectId("6459e73f78b61e8c2579a13f")
+      }
+    ],
+    lugar_envio: 'Quetzaltenango',
+    fecha_compra: ISODate("2023-05-09T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-09T00:00:00.000Z"),
+    Total: 3900,
+    TotalPag: 3705,
+    TotalCli: 195,
+    estado_pedido: 'Entregado'
+  },
+  {
+    _id: ObjectId("6459e7f778b61e8c2579a176"),
+    dpi: 456781234567,
+    nombre_usuario: 'Fernando',
+    productos_comprados: [
+      {
+        nombre_producto: 'Relor de mano',
+        cantidad: 1,
+        _id: ObjectId("6459e7f778b61e8c2579a177")
+      },
+      {
+        nombre_producto: 'Calectines',
+        cantidad: 1,
+        _id: ObjectId("6459e7f778b61e8c2579a178")
+      }
+    ],
+    lugar_envio: 'Zona 1, Mixco Guatemala',
+    fecha_compra: ISODate("2023-05-09T00:00:00.000Z"),
+    Total: 300,
+    TotalPag: 285,
+    TotalCli: 15,
+    estado_pedido: 'Entregado',
+    fecha_entrega_prevista: ISODate("2023-05-10T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("645b57cbf5c7efe890555257"),
+    dpi: 456781234567,
+    nombre_usuario: 'Fernando',
+    productos_comprados: [
+      {
+        nombre_producto: 'Radio Philips',
+        cantidad: 2,
+        _id: ObjectId("645b57cbf5c7efe890555258")
+      }
+    ],
+    lugar_envio: 'Zona 1, Mixco Guatemala',
+    fecha_compra: ISODate("2023-05-10T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-14T00:00:00.000Z"),
+    Total: 3000.6,
+    TotalPag: 2850.5699999999997,
+    TotalCli: 150.03,
+    estado_pedido: 'procesando'
+  },
+  {
+    _id: ObjectId("645b653e40fdc3e0bc2e9350"),
+    dpi: 554433221177,
+    nombre_usuario: 'Natasha Bans',
+    productos_comprados: [
+      {
+        nombre_producto: 'Radio Philips',
+        cantidad: 1,
+        _id: ObjectId("645b653e40fdc3e0bc2e9351")
+      }
+    ],
+    lugar_envio: 'Zona 1, Mixco Guatemala',
+    fecha_compra: ISODate("2023-05-10T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-14T00:00:00.000Z"),
+    Total: 1500.3,
+    TotalPag: 1425.2849999999999,
+    TotalCli: 75.015,
+    estado_pedido: 'procesando'
+  },
+  {
+    _id: ObjectId("645b660e40fdc3e0bc2e9372"),
+    dpi: 887766554442,
+    nombre_usuario: 'Marco',
+    productos_comprados: [
+      {
+        nombre_producto: 'Laptop Vostro 3400 14 Plg',
+        cantidad: 1,
+        _id: ObjectId("645b660e40fdc3e0bc2e9373")
+      }
+    ],
+    lugar_envio: 'Zona 2, Quetzaltenango',
+    fecha_compra: ISODate("2023-05-10T00:00:00.000Z"),
+    fecha_entrega_prevista: ISODate("2023-05-14T00:00:00.000Z"),
+    Total: 3900,
+    TotalPag: 3705,
+    TotalCli: 195,
+    estado_pedido: 'procesando'
+  }
+]

@@ -70,7 +70,8 @@ fetch(`http://localhost:3000/prod/detalles/${productId}`)
         })
         .then(data => {
           console.log('Producto aprobado:', data);
-    //      window.location.href = 'prodApro.html'; // redirige a la página de productos
+          alert('Producto Aprobado');
+          window.location.href = 'prodApro.html'; // redirige a la página de productos
         })
         .catch(error => {
           console.error('Error al aprobar el producto:', error);
@@ -97,8 +98,9 @@ fetch(`http://localhost:3000/prod/detalles/${productId}`)
           return response.json();
         })
         .then(data => {
-          console.log('Producto aprobado:', data);
-    //      window.location.href = 'prodApro.html'; // redirige a la página de productos
+          console.log('Producto Negado:', data);
+          alert('Producto Aprobado');
+          window.location.href = 'prodApro.html'; // redirige a la página de productos
         })
         .catch(error => {
           console.error('Error al aprobar el producto:', error);

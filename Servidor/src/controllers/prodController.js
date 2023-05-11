@@ -181,30 +181,30 @@ const eliminarProducto = async (req, res) => {
   }
 };
 //-------------------------------------------------------------------------------Agregar Productos
-async function agregarProducto(req, res) {
-  const { nombre, descripcion, precio, cantidad_existente, categoria } = req.body;
-
-  const producto = new Producto({
-    nombre,
-    descripcion,
-    precio,
-    cantidad_existente,
-    categoria,
-    estado: 'enviado'
-  });
-
-  if (req.file) {
-    producto.img = req.file.path;
-  }
-
+const agregarProducto = async (req, res) => {
   try {
-    const productoGuardado = await producto.save();
-    res.json(productoGuardado);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-}
+    const { nombre, precio, descripcion, cantidad_existente, categoria } = req.body;
+    const vendedor = req.user ? { nombre: req.user.nombre, DPI: req.user.DPI } : {};
 
+    const producto = new Productos({
+      nombre,
+      precio,
+      img: req.file.path,
+      descripcion,
+      vendedor,
+      categorias: categoria.split(',').map((c) => c.trim()),
+      cantidad_existente,
+      estado: 'disponible',
+    });
+
+    await producto.save();
+
+    res.status(201).json({ mensaje: 'Producto agregado exitosamente' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ mensaje: 'Ocurrió un error al agregar el producto' });
+  }
+};
 //----------------------------------------------------------------------------Reporte
 const reporte4 = async (req, res) => {
   try {

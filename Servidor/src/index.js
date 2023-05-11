@@ -12,6 +12,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+const upload = multer({ dest: 'src/controllers/img/imgproductos' });
+
+app.post('/upload', upload.single('file'), (req, res) => {
+  // Manejo de la subida del archivo
+  console.log(req.file);
+  res.send('Archivo subido con éxito');
+});
 
 //clase estatica para acceder a nuestras imagenes
 app.use(express.static(path.join(__dirname, 'controllers')));

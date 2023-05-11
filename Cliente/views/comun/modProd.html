@@ -16,7 +16,7 @@
                   <a href="../../views/comun.html"><h2 class="logo__name" style="color: aliceblue;">Ecommerce<span class="point">.</span></h2></a>
                 </div>
                 <div class="links">
-                    <a href="#" class="link">Mis Productos</a>
+                    <a href="../comun/misProd.html" class="link">Mis Productos</a>
                     <a href="../comun/prodCom.html" class="link">Comprados</a>
                     <a href="../comun/produts.html" class="link">Productos</a>
                     <a href="../comun/prodSub.html" class="link">Vender</a>
@@ -125,6 +125,8 @@
   .then(response => response.json())
   .then(data => {
     console.log(data);
+    alert('Productos Modificados');
+    window.location.href = 'misProd.html'
     // Aquí puedes hacer algo con la respuesta del servidor
   })
   .catch(error => console.error(error));

@@ -1,0 +1,74 @@
+[
+  {
+    _id: ObjectId("64460181f67797f7cc4c16a9"),
+    nombre_usuario: 'Fernando',
+    password: 'comun',
+    tipo_usuario: 'comun',
+    dpi: '456781234567',
+    correo_electronico: 'Fernando@example.com',
+    telefono: '11002233'
+  },
+  {
+    _id: ObjectId("644626f6ba1d211976039bb7"),
+    nombre_usuario: 'Axel',
+    password: 'axel123',
+    tipo_usuario: 'comun',
+    dpi: '786543263712',
+    correo_electronico: 'axel@ejemplo.com',
+    telefono: '77556655'
+  },
+  {
+    _id: ObjectId("6446312cba1d211976039bb9"),
+    nombre_usuario: 'Marco',
+    password: 'Marco123',
+    tipo_usuario: 'comun',
+    dpi: '887766554442',
+    correo_electronico: 'marco@gmail.com',
+    telefono: '44667755'
+  },
+  {
+    _id: ObjectId("6446587cbba4081e8e175f90"),
+    nombre_usuario: 'Natasha Bans',
+    password: 'nuevo',
+    tipo_usuario: 'comun',
+    dpi: '554433221177',
+    correo_electronico: 'Natasha12@gmail.com',
+    telefono: '55119908'
+  },
+  {
+    _id: ObjectId("64488dd46a8151f554dc03ae"),
+    nombre_usuario: 'Thomas',
+    password: 'admin',
+    tipo_usuario: 'administrador',
+    dpi: '989812312',
+    correo_electronico: 'Thomas@gmail.com',
+    telefono: '99881122'
+  },
+  {
+    _id: ObjectId("64488e0b6a8151f554dc03b3"),
+    nombre_usuario: 'Jhos',
+    password: 'bodega',
+    tipo_usuario: 'bodega',
+    dpi: '0931231123',
+    correo_electronico: 'Jhos@gmail.com',
+    telefono: '2131231'
+  },
+  {
+    _id: ObjectId("645b671340fdc3e0bc2e93bd"),
+    nombre_usuario: 'Emilia Rose Zic',
+    password: 'bodega',
+    tipo_usuario: 'bodega',
+    dpi: '221133009876',
+    correo_electronico: 'EmiliaRo@example.com',
+    telefono: '77554432'
+  },
+  {
+    _id: ObjectId("645c5200ad5cba5524c06235"),
+    nombre_usuario: 'Maria Mendez',
+    password: 'maria123',
+    tipo_usuario: 'comun',
+    dpi: '876543232412',
+    correo_electronico: 'maria@gmail.com',
+    telefono: '77552211'
+  }
+]

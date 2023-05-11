@@ -129,30 +129,23 @@ console.log(datos);
 
 //-------------------------------------------------------- Para guardar los productos
 //Hacer la consulta para poder guardar los datos de los productos
-document.getElementById('historia-form').addEventListener('submit', async (event) => {
+const formulario = document.getElementById('historia-form');
+formulario.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  const form = event.target;
-  const formData = new FormData(form);
+  const data = new FormData(formulario);
 
-  const imagen = document.getElementById('imagen').files[0];
-  formData.append('imagen', imagen);
-
-  try {
-    const response = await fetch('http://localhost:3000/prod/agregar', {
-      method: 'POST',
-      body: formData
-    });
-
-    if (!response.ok) {
-      throw new Error('Error al agregar el producto');
-    }
-
-    const data = await response.json();
-
-    // hacer algo con la respuesta del servidor, como redirigir a la página de carrito de compras
-  } catch (error) {
-    console.error(error);
-  }
+  fetch('http://localhost:3000/prod/agproductos', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    },
+    body: data,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      formulario.reset();
+    })
+    .catch((error) => console.log(error));
 });
-
